@@ -15,7 +15,7 @@ git clone $URL $DIR
 cd $DIR
 PAGES_DIR=$PWD
 
-git checkout --orphan gh-pages
+git checkout gh-pages
 rm -rf .gitignore
 rm -rf .gitmodules
 rm -rf *
