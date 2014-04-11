@@ -50,52 +50,6 @@ public class FileUtil {
     }
 
     /**
-     * Helper function to create a temp directory in the system default temporary file directory.
-     *
-     * @param prefix The prefix string to be used in generating the file's name; must be at least
-     *            three characters long
-     * @return the created directory
-     * @throws IOException if file could not be created
-     */
-    public static File createTempDir(String prefix) throws IOException {
-        return createTempDir(prefix, null);
-    }
-
-    /**
-     * Helper function to create a temp directory.
-     *
-     * @param prefix The prefix string to be used in generating the file's name; must be at least
-     *            three characters long
-     * @param parentDir The parent directory in which the directory is to be created. If
-     *            <code>null</code> the system default temp directory will be used.
-     * @return the created directory
-     * @throws IOException if file could not be created
-     */
-    public static File createTempDir(String prefix, File parentDir) throws IOException {
-        // create a temp file with unique name, then make it a directory
-        File tmpDir = File.createTempFile(prefix, "", parentDir);
-        tmpDir.delete();
-        if (!tmpDir.mkdirs()) {
-            throw new IOException("unable to create directory");
-        }
-        return tmpDir;
-    }
-
-    /**
-     * Helper wrapper function around {@link File#createTempFile(String, String)} that audits for
-     * potential out of disk space scenario.
-     *
-     * @see {@link File#createTempFile(String, String)}
-     * @throws LowDiskSpaceException if disk space on temporary partition is lower than minimum
-     *             allowed
-     */
-    public static File createTempFile(String prefix, String suffix) throws IOException {
-        File returnFile = File.createTempFile(prefix, suffix);
-        verifyDiskSpace(returnFile);
-        return returnFile;
-    }
-
-    /**
      * Helper wrapper function around {@link File#createTempFile(String, String, File parentDir)}
      * that audits for potential out of disk space scenario.
      *
@@ -271,30 +225,28 @@ public class FileUtil {
     }
 
     /**
-     * Utility method to create a temporary zip file containing the given directory and
+     * Utility method to create a zip file containing the given directory and
      * all its contents.
      *
      * @param dir the directory to zip
-     * @return a temporary zip {@link File} containing directory contents
+     * @param destZipFile a zip {@link File} which will contain directory contents upon return
      * @throws IOException if failed to create zip file
      */
-    public static File createZip(File dir) throws IOException {
-        File zipFile = FileUtil.createTempFile("dir", ".zip");
+    public static void createZip(File dir, File destZipFile) throws IOException {
         ZipOutputStream out = null;
         try {
-            FileOutputStream fileStream = new FileOutputStream(zipFile);
+            FileOutputStream fileStream = new FileOutputStream(destZipFile);
             out = new ZipOutputStream(new BufferedOutputStream(fileStream));
             addToZip(out, dir, new LinkedList<String>());
         } catch (IOException e) {
-            zipFile.delete();
+            destZipFile.delete();
             throw e;
         } catch (RuntimeException e) {
-            zipFile.delete();
+            destZipFile.delete();
             throw e;
         } finally {
             StreamUtil.closeStream(out);
         }
-        return zipFile;
     }
 
     /**
@@ -395,10 +347,9 @@ public class FileUtil {
         return fileToDelete.delete();
     }
 
-    private static void verifyDiskSpace(File file) {
+    public static void verifyDiskSpace(File file) {
         // Based on empirical testing File.getUsableSpace is a low cost operation (~ 100 us for
-        // local disk, ~ 100 ms for network disk). Therefore call it every time tmp file is
-        // created
+        // local disk, ~ 100 ms for network disk).
         if (file.getUsableSpace() < MIN_DISK_SPACE) {
             throw new LowDiskSpaceException(String.format(
                     "Available space on %s is less than %s MB", file.getAbsolutePath(),

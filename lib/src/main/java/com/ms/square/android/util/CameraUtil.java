@@ -1,17 +1,14 @@
 package com.ms.square.android.util;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.hardware.Camera;
 import android.os.Build;
 import android.util.Log;
+import android.view.Surface;
 
 import java.util.List;
 
-/**
- * CameraUtil.java
- *
- * @see {https://developer.android.com/samples/BasicMediaDecoder/src/com.example.android.common.media/CameraHelper.html}
- */
 public class CameraUtil {
 
     private static final String TAG = CameraUtil.class.getSimpleName();
@@ -46,6 +43,7 @@ public class CameraUtil {
         // Iterate over all available sizes and pick the largest size that can fit in the view and
         // still maintain the aspect ratio.
         for (Camera.Size size : sizes) {
+            Log.d(TAG, "SupportedSize(W, H) -> " + "(" + size.width + "," + size.height + ")");
             double ratio = (double) size.width / size.height;
             if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE)
                 continue;
@@ -147,5 +145,33 @@ public class CameraUtil {
         }
 
         return null;
+    }
+
+    /**
+     * Assumes the starting position is 0 (landscape, clockwise).
+     * @param activity
+     * @param cameraId
+     * @return the camera's display orientation
+     */
+    public static int getCameraDisplayOrientation(Activity activity, int cameraId) {
+        Camera.CameraInfo info = new Camera.CameraInfo();
+        Camera.getCameraInfo(cameraId, info);
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0: degrees = 0; break;
+            case Surface.ROTATION_90: degrees = 90; break;
+            case Surface.ROTATION_180: degrees = 180; break;
+            case Surface.ROTATION_270: degrees = 270; break;
+        }
+
+        int result;
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (info.orientation - degrees + 360) % 360;
+        }
+        return result;
     }
 }

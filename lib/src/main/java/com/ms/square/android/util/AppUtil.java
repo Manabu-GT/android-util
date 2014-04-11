@@ -8,6 +8,13 @@ import android.net.Uri;
 
 public class AppUtil {
 
+    /**
+     * Gets the application name specified by android:label in the AndroidManifest.xml.
+     * It does not work if you hard-code your app name like android:label="MyApp".
+     * Use a string resource such as @string/app_name.
+     * @param context
+     * @return application name
+     */
     public static String getApplicationName(Context context) {
         int stringId = context.getApplicationInfo().labelRes;
         return context.getString(stringId);
@@ -30,6 +37,11 @@ public class AppUtil {
         }
     }
 
+    /**
+     * Opens a native GooglePlay app if available; otherwise, open GooglePlay site via a web browser.
+     * @param context
+     * @param targetPackageName - package name of the target app the GooglePlay opens
+     */
     public static void startPlayStore(Context context, String targetPackageName) {
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + targetPackageName)));
