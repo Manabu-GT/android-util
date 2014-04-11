@@ -15,7 +15,7 @@ git clone $URL $DIR
 cd $DIR
 PAGES_DIR=$PWD
 
-git checkout gh-pages
+git checkout -b gh-pages
 rm -rf .gitignore
 rm -rf .gitmodules
 rm -rf *
