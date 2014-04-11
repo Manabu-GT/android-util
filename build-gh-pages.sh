@@ -11,11 +11,11 @@ rm -rf $DIR
 # Check out pages branch
 git clone $URL $DIR
 
-# Refresh pages branch
+# Clear pages branch history
 cd $DIR
 PAGES_DIR=$PWD
 
-git checkout -b gh-pages
+git checkout --orphan gh-pages
 rm -rf .gitignore
 rm -rf .gitmodules
 rm -rf *
@@ -23,9 +23,9 @@ rm -rf *
 # Create an aar and place it in the pages branch
 cd $HOME_DIR
 ./gradlew -Dorg.gradle.project.repoDir="$PAGES_DIR" uploadArchives
-#./gradlew uploadArchives
 
 # Commit pages branch
+cd $PAGES_DIR
 git add --all .
 git commit -m "Updated at $(date)"
 
