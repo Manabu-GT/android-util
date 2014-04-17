@@ -32,7 +32,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository(url: repositoryUrl)
-            pom.version = '0.1.0'
+            pom.version = '0.1.1'
             pom.groupId = 'com.ms.square'
             pom.artifactId = 'android-util'
         }
