@@ -4,6 +4,7 @@ Utility classes for Android
 
 ## Available Utility Classes
 
+* `AnimUtil`
 * `AppLog`
 * `AppUtil`
 * `CameraUtil`
@@ -28,6 +29,6 @@ format: aar
 
 ```
 dependencies {
-    compile 'com.ms.square:android-util:0.1.0'
+    compile 'com.ms.square:android-util:0.1.1'
 }
 ```
