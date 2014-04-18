@@ -32,3 +32,14 @@ dependencies {
     compile 'com.ms.square:android-util:0.1.1'
 }
 ```
+
+###Proguard (Sample)
+
+```
+-keep class com.ms.square.android.util.** { *; }
+# the following strips off verbose and debug logs
+-assumenosideeffects class com.ms.square.android.util.AppLog {
+    public static *** v(...);
+    public static *** d(...);
+}
+```
