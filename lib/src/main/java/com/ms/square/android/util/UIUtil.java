@@ -14,6 +14,12 @@ public class UIUtil {
         return pixel;
     }
 
+    public static float convertToPixelFromSp(Context ctx, float sp) {
+        float pixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
+                ctx.getResources().getDisplayMetrics());
+        return pixel;
+    }
+
     public static Point getDisplaySize(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
