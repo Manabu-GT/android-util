@@ -38,6 +38,18 @@ public class AppUtil {
     }
 
     /**
+     * Gets the resource id from the name and type
+     * ex... getResIdFromIdentifier(ctx, "error_msg", "string");
+     * @param context
+     * @param name
+     * @param defType
+     * @return resourceId
+     */
+    public static int getResIdFromIdentifier(Context context, String name, String defType) {
+        return context.getResources().getIdentifier(name, defType, context.getPackageName());
+    }
+
+    /**
      * Opens a native GooglePlay app if available; otherwise, open GooglePlay site via a web browser.
      * @param context
      * @param targetPackageName - package name of the target app the GooglePlay opens
