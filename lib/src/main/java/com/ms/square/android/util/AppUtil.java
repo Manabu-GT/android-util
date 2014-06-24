@@ -50,6 +50,22 @@ public class AppUtil {
     }
 
     /**
+     * Checks if the target app is currently available on the device
+     * @param context
+     * @param targetPackageName
+     * @return
+     */
+    public static boolean isTargetAppAvailable(Context context, String targetPackageName) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getApplicationInfo(targetPackageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException ne) {
+            return false;
+        }
+    }
+
+    /**
      * Opens a native GooglePlay app if available; otherwise, open GooglePlay site via a web browser.
      * @param context
      * @param targetPackageName - package name of the target app the GooglePlay opens
