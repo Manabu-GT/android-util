@@ -5,7 +5,7 @@ Utility classes for Android
 ## Available Utility Classes
 
 * `AnimUtil`
-* `AppLog`
+* `LogUtil`
 * `AppUtil`
 * `CameraUtil`
 * `FileUtil`
@@ -17,9 +17,9 @@ Utility classes for Android
 
 ###Maven
 
-```
+```groovy
 repositories {
-    maven { url 'http://Manabu-GT.github.com/android-util/mvn-repo' }
+    maven { url 'https://raw.githubusercontent.com/Manabu-GT/mvn-repo/master/' }
 }
 ```
 
@@ -27,9 +27,9 @@ repositories {
 
 format: aar
 
-```
+```groovy
 dependencies {
-    compile 'com.ms.square:android-util:0.1.1'
+    compile 'com.ms.square:android-util:0.1.2'
 }
 ```
 
@@ -38,9 +38,9 @@ dependencies {
 ```
 -keep class com.ms.square.android.util.** { *; }
 # the following strips off verbose and debug logs
--assumenosideeffects class com.ms.square.android.util.AppLog {
-    public static *** v(...);
-    public static *** d(...);
+-assumenosideeffects class com.ms.square.android.util.LogUtil {
+    public static *** LOGV(...);
+    public static *** LOGD(...);
 }
 ```
 
