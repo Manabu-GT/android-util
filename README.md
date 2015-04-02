@@ -6,20 +6,19 @@ Utility classes for Android
 Available Utility Classes
 -----------------------------
 
-* `AnimUtil`
-* `LogUtil`
 * `AppUtil`
-* `CameraUtil`
+* `DimenUtil`
 * `FileUtil`
+* `ImageUtil`
 * `NetUtil`
 * `StreamUtil`
 * `StringUtil`
 * `ToastMaster`
-* `UIUtil`
+* `ViewUtil`
 
 Requirements
 -------------
-API Level 8 (Froyo) and above.
+API Level 9 (GingerBread) and above.
 
 Setup
 ------
@@ -28,7 +27,7 @@ so you just need to add the followings to your ***build.gradle*** file:
 
 ```groovy
 dependencies {
-    compile 'com.ms-square:android-util:0.1.0'
+    compile 'com.ms-square:android-util:0.1.1'
 }
 ```
 
