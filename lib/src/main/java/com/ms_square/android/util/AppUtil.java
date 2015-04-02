@@ -1,4 +1,4 @@
-package com.ms.square.android.util;
+package com.ms_square.android.util;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;

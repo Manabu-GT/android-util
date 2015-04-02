@@ -1,8 +1,10 @@
-# android-util
+android-util
+=============
 
 Utility classes for Android
 
-## Available Utility Classes
+Available Utility Classes
+-----------------------------
 
 * `AnimUtil`
 * `LogUtil`
@@ -15,36 +17,23 @@ Utility classes for Android
 * `ToastMaster`
 * `UIUtil`
 
-###Maven
+Requirements
+-------------
+API Level 8 (Froyo) and above.
 
-```groovy
-repositories {
-    maven { url 'https://raw.githubusercontent.com/Manabu-GT/mvn-repo/master/' }
-}
-```
-
-###Gradle
-
-format: aar
+Setup
+------
+The library is pushed to Maven Central as an AAR,
+so you just need to add the followings to your ***build.gradle*** file:
 
 ```groovy
 dependencies {
-    compile 'com.ms.square:android-util:0.1.2'
+    compile 'com.ms-square:android-util:0.1.0'
 }
 ```
 
-###Proguard (Sample)
-
-```
--keep class com.ms.square.android.util.** { *; }
-# the following strips off verbose and debug logs
--assumenosideeffects class com.ms.square.android.util.LogUtil {
-    public static *** LOGV(...);
-    public static *** LOGD(...);
-}
-```
-
-## License
+License
+----------
 
 ```
  Copyright 2014 Manabu Shimobe

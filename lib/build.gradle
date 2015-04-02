@@ -1,5 +1,4 @@
-apply plugin: 'android-library'
-apply plugin: 'maven'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion project.ANDROID_COMPILE_SDK_VERSION
@@ -21,20 +20,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-def repositoryUrl
-if (has('repoDir')) {
-    repositoryUrl = "file://$repoDir/mvn-repo/"
-} else {
-    repositoryUrl = "file://$buildDir/mvn-repo/"
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: repositoryUrl)
-            pom.version = '0.1.2'
-            pom.groupId = 'com.ms.square'
-            pom.artifactId = 'android-util'
-        }
-    }
-}
+// for maven central deployment
+apply from: 'https://raw.githubusercontent.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
