@@ -5,8 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class AppUtil {
+
+    private static final String TAG = AppUtil.class.getSimpleName();
 
     /**
      * Gets the application name specified by android:label in the AndroidManifest.xml.
@@ -15,7 +20,7 @@ public class AppUtil {
      * @param context
      * @return application name
      */
-    public static String getApplicationName(Context context) {
+    public static String getApplicationName(@NonNull Context context) {
         int stringId = context.getApplicationInfo().labelRes;
         return context.getString(stringId);
     }
@@ -25,16 +30,16 @@ public class AppUtil {
      * @param context
      * @return
      */
-    public static String getVersion(Context context) {
+    @NonNull
+    public static String getVersion(@Nullable Context context) {
         String version = "Unknown";
         if (context == null) return version;
         try {
             version =  context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException ignore) {
-
-        } finally {
-            return version;
+        } catch (PackageManager.NameNotFoundException ex) {
+            Log.w(TAG, "Package Not found:" + context.getPackageName());
         }
+        return version;
     }
 
     /**
@@ -45,20 +50,20 @@ public class AppUtil {
      * @param defType
      * @return resourceId
      */
-    public static int getResIdFromIdentifier(Context context, String name, String defType) {
+    public static int getResIdFromIdentifier(@NonNull Context context, String name, String defType) {
         return context.getResources().getIdentifier(name, defType, context.getPackageName());
     }
 
     /**
-     * Checks if the target app is currently available on the device
+     * Checks if the target app is installed on the device
      * @param context
      * @param targetPackageName
      * @return
      */
-    public static boolean isTargetAppAvailable(Context context, String targetPackageName) {
+    public static boolean isAppInstalled(@NonNull Context context, String targetPackageName) {
         PackageManager pm = context.getPackageManager();
         try {
-            pm.getApplicationInfo(targetPackageName, 0);
+            pm.getApplicationInfo(targetPackageName, PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException ne) {
             return false;
@@ -70,7 +75,7 @@ public class AppUtil {
      * @param context
      * @param targetPackageName - package name of the target app the GooglePlay opens
      */
-    public static void startPlayStore(Context context, String targetPackageName) {
+    public static void startPlayStore(@NonNull Context context, String targetPackageName) {
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + targetPackageName)));
         } catch (ActivityNotFoundException ae) {

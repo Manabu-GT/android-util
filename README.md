@@ -19,7 +19,7 @@ Available Utility Classes
 
 Requirements
 -------------
-API Level 8 (Froyo) and above.
+API Level 9 (GingerBread) and above.
 
 Setup
 ------
