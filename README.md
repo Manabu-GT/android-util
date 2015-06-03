@@ -27,8 +27,14 @@ so you just need to add the followings to your ***build.gradle*** file:
 
 ```groovy
 dependencies {
-    compile 'com.ms-square:android-util:0.1.1'
+    compile 'com.ms-square:android-util:0.1.2'
 }
+```
+
+How to deploy (memo)
+---------------------
+```
+./gradlew uploadArchives
 ```
 
 License

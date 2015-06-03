@@ -23,25 +23,25 @@ public class NetUtil {
     public static boolean isNetworkConnected(@NonNull Context context) {
         NetworkInfo activeNetwork = getActiveNetwork(context);
         boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnected();
+                activeNetwork.isConnectedOrConnecting();
 
         return isConnected;
     }
 
     public static boolean isWifiConnected(@NonNull Context context) {
         NetworkInfo activeNetwork = getActiveNetwork(context);
-        boolean isWifiConnected = activeNetwork != null && activeNetwork.isConnected() &&
+        boolean isWifiConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting() &&
                 activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
 
         return isWifiConnected;
     }
 
-    public static boolean isWifiOrWiMaxConnected(@NonNull Context context) {
+    public static boolean isWiMaxConnected(@NonNull Context context) {
         NetworkInfo activeNetwork = getActiveNetwork(context);
-        boolean isWifiWiMaxConnected = activeNetwork != null && activeNetwork.isConnected() &&
-                (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI || activeNetwork.getType() == ConnectivityManager.TYPE_WIMAX);
+        boolean isWiMaxConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting() &&
+                activeNetwork.getType() == ConnectivityManager.TYPE_WIMAX;
 
-        return isWifiWiMaxConnected;
+        return isWiMaxConnected;
     }
 
     private static NetworkInfo getActiveNetwork(@NonNull Context context) {

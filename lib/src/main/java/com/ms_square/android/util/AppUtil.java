@@ -4,10 +4,13 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import java.util.List;
 
 public class AppUtil {
 
@@ -81,5 +84,33 @@ public class AppUtil {
         } catch (ActivityNotFoundException ae) {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + targetPackageName)));
         }
+    }
+
+    /**
+     * Returns true if the given intent can be handled on this device
+     * @param context
+     * @param intent
+     * @return
+     */
+    public static boolean canHandleIntent(@NonNull Context context, Intent intent) {
+        PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return resolveInfo.size() > 0;
+    }
+
+    /**
+     * Returns true if an activity with the given intent is successfully started
+     * @param context
+     * @param intent
+     * @return
+     */
+    protected static boolean startActivity(@NonNull Context context, Intent intent) {
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException ae) {
+            return false;
+        }
+
+        return true;
     }
 }
