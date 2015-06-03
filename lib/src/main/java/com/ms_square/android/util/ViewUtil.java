@@ -11,6 +11,10 @@ public class ViewUtil {
 
     private static final String TAG = ViewUtil.class.getSimpleName();
 
+    public static Bitmap drawViewToBitmap(@NonNull View view, int width, int height) {
+        return drawViewToBitmap(view, width, height, 0f, 0f, 1);
+    }
+
     public static Bitmap drawViewToBitmap(@NonNull View view, int width, int height, int downSampling) {
         return drawViewToBitmap(view, width, height, 0f, 0f, downSampling);
     }
