@@ -41,7 +41,7 @@ License
 ----------
 
 ```
- Copyright 2014 Manabu Shimobe
+ Copyright 2014 Manabu-GT
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
